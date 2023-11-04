@@ -13,11 +13,11 @@ namespace STORE.Bussiness.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ArticuloController : ControllerBase
+    public class ArticulosController : ControllerBase
     {
         private readonly IArticuloRepository _articuloRepository;
 
-        public ArticuloController(IArticuloRepository articuloRepository)
+        public ArticulosController(IArticuloRepository articuloRepository)
         {
             _articuloRepository = articuloRepository;
         }

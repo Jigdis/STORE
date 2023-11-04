@@ -171,6 +171,7 @@ namespace STORE.Data.Repository
                     .Include(a => a.Articulo)
                     .Include(t => t.Tienda)
                     .Where(a => a.ArticuloID == articuloCreateDto.ArticuloID)
+                    .Where(a => a.TiendaID == articuloCreateDto.TiendaID)
                     .FirstOrDefaultAsync();
 
 
@@ -196,7 +197,6 @@ namespace STORE.Data.Repository
                         articuloExist.Articulo.Stock = articuloCreateDto.Stock;
 
                         articuloExist.TiendaID = articuloCreateDto.TiendaID;
-                        articuloExist.Fecha = DateTime.Now;
 
                         await _context.SaveChangesAsync();
 

@@ -24,7 +24,11 @@ const routes: Routes = [
     path: 'cliente',
     component: LayoutComponent,
     children: [
-      
+      {
+        path: 'tienda',
+        loadChildren: () =>
+          import('./tienda/tienda.module').then((m) => m.TiendaModule),
+      },
     ],
   },
   {

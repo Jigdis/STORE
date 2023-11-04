@@ -1,8 +1,12 @@
-<div class="layout-container">
-    <div class="sidebar">
-      <app-sidebar-menu></app-sidebar-menu>
-    </div>
-    <div class="content">
-      <router-outlet></router-outlet>
-    </div>
+<div class="grid">
+  <div class="col-fixed" style="width:350px">
+    <app-sidebar-menu></app-sidebar-menu> 
   </div>
+  <div class="col">
+      <div class="border-round-sm font-bold mt-5">
+        <p-card>
+          <router-outlet></router-outlet>
+        </p-card>
+      </div>
+  </div>
+</div>

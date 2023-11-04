@@ -1,4 +1,4 @@
-﻿namespace STORE.Data.Dtos.Tienda
+﻿namespace STORE.Entities.Dtos.Tienda
 {
     public class TiendaCreateDto
     {

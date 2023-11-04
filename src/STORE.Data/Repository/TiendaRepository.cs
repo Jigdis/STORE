@@ -1,15 +1,7 @@
-﻿using AutoMapper;
-using Microsoft.EntityFrameworkCore;
-using STORE.Data.Commons;
+﻿using Microsoft.EntityFrameworkCore;
 using STORE.Data.Context;
-using STORE.Data.Dtos.Tienda;
 using STORE.Entities.Interface;
 using STORE.Entities.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace STORE.Data.Repository
 {

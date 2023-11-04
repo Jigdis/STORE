@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using STORE.Data.Commons;
 using STORE.Data.Constants;
-using STORE.Data.Dtos.Tienda;
+using STORE.Entities.Commons;
+using STORE.Entities.Dtos.Tienda;
 using STORE.Entities.Interface;
 using STORE.Entities.Models;
 

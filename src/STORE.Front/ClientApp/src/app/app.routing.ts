@@ -1,34 +1,48 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { BrowserModule } from '@angular/platform-browser';
+import { LayoutComponent } from './shared/components/layout/layout.component';
 
 
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'admin',
+    redirectTo: 'auth',
     pathMatch: 'full',
   },
   {
+    path: 'auth',
+    children: [
+      {
+        path: '',
+        loadChildren: () =>
+          import('./auth/auth.module').then((m) => m.AuthModule),
+      },
+    ],
+  },
+  {
+    path: 'cliente',
+    component: LayoutComponent,
+    children: [
+      
+    ],
+  },
+  {
     path: 'admin',
-    data: {
-      breadcrumb: { skip: true }
-    },
+    component: LayoutComponent,
     children: [
       
     ],
   },
   {
     path: '**',
-    redirectTo: 'admin',
+    redirectTo: 'auth',
   },
 ];
 
 @NgModule({
   imports: [
     CommonModule,
-    BrowserModule,
     RouterModule.forRoot(routes, {
       useHash: true,
     }),

@@ -10,12 +10,12 @@ namespace STORE.Bussiness.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class TiendaController : ControllerBase
+    public class TiendasController : ControllerBase
     {
         private readonly ITiendaRepository _tiendaRepository;
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
-        public TiendaController(ITiendaRepository tiendaRepository, IMapper mapper, IUnitOfWork unitOfWork)
+        public TiendasController(ITiendaRepository tiendaRepository, IMapper mapper, IUnitOfWork unitOfWork)
         {
             _tiendaRepository = tiendaRepository;
             _mapper = mapper;

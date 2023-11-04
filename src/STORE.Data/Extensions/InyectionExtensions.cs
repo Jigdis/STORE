@@ -22,6 +22,8 @@ namespace STORE.Data.Extensions
 
             services.AddTransient<IArticuloRepository, ArticuloRepository>();
             services.AddTransient<ITiendaRepository, TiendaRepository>();
+            services.AddTransient<IClienteRepository, ClienteRepository>();
+
 
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
 

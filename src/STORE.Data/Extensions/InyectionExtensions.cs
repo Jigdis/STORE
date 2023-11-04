@@ -19,6 +19,8 @@ namespace STORE.Data.Extensions
 
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddTransient<IUnitOfWork, Unit.UnitOfWork>();
+
+            services.AddTransient<IArticuloRepository, ArticuloRepository>();
             services.AddTransient<ITiendaRepository, TiendaRepository>();
 
             services.AddAutoMapper(Assembly.GetExecutingAssembly());

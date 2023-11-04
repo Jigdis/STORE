@@ -1,4 +1,4 @@
-﻿namespace STORE.Data.Commons
+﻿namespace STORE.Entities.Commons
 {
     public class BaseError
     {

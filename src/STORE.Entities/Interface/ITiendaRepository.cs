@@ -1,4 +1,5 @@
-﻿using STORE.Entities.Models;
+﻿using STORE.Entities.Commons;
+using STORE.Entities.Models;
 
 namespace STORE.Entities.Interface
 {

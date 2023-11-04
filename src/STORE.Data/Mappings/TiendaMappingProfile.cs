@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
-using STORE.Data.Dtos.Tienda;
+using STORE.Entities.Dtos.Articulo;
+using STORE.Entities.Dtos.Tienda;
 using STORE.Entities.Models;
 
 namespace STORE.Data.Mappings
@@ -12,6 +13,9 @@ namespace STORE.Data.Mappings
                 .ReverseMap();
 
             CreateMap<Tienda, TiendaCreateDto>()
+                .ReverseMap();
+
+            CreateMap<Tienda, ListArticulosDto>()
                 .ReverseMap();
         }
     }

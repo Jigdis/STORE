@@ -40,7 +40,7 @@ namespace STORE.Data.Repository
             return dbSet.Where(expression);
         }
 
-        public async Task<IEnumerable<T>> GetAll()
+        public virtual async Task<IEnumerable<T>> GetAll()
         {
             return await dbSet.ToListAsync();
         }

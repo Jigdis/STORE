@@ -5,6 +5,9 @@ import { Articulo } from './interface/articulo';
 import { ArticuloService } from './service/articulo.service';
 import { ArticuloCreate } from './interface/articulo-create';
 import { RegistroModalComponent } from './components/registro-modal/registro-modal.component';
+import { AuthService } from '../auth/services/auth.service';
+import { Subscription } from 'rxjs';
+import { CarritoModalComponent } from './components/carrito-modal/carrito-modal.component';
 
 @Component({
   selector: 'app-articulo',
@@ -13,20 +16,33 @@ import { RegistroModalComponent } from './components/registro-modal/registro-mod
 })
 export class ArticuloComponent {
   articulos: Articulo[] = [];
+  isAdmin: boolean | undefined = false;
+  private userServiceSubscription: Subscription | undefined;
 
   constructor(
     private dialogService: DialogService,
     private _articuloService: ArticuloService,
     private _messageService: MessageService,
-    private confirmationService: ConfirmationService
+    private confirmationService: ConfirmationService,
+    private auth: AuthService,
   ) {
+    this.userServiceSubscription = this.auth.currentUser.subscribe(
+      currentUser => {
+        this.isAdmin = currentUser.usuario?.admin
+      }
+    );
     this.listTiendas();
   }
+
 
   listTiendas() {
     this._articuloService.listArticulos().subscribe({
       next: (resp) => {
         this.articulos = resp;
+
+        this.articulos.forEach(articulo => {
+          articulo.cantidadCarrito = 0;
+        });
         console.log('articulos',this.articulos)
       },
       error: (error) => {
@@ -80,6 +96,30 @@ export class ArticuloComponent {
       width: '50%',
       contentStyle: { overflow: 'auto' },
       baseZIndex: 10000,
+    });
+
+    ref.onClose.subscribe((result) => {
+      this.listTiendas()
+    });
+  }
+
+  agregarCarrito(articulo: Articulo){
+    articulo.cantidadCarrito += 1;
+  }
+
+  eliminarCarrito(articulo: Articulo){
+  if(articulo.cantidadCarrito > 0)
+    articulo.cantidadCarrito -= 1;
+
+  }
+
+  verCarrito(){
+    const ref: DynamicDialogRef = this.dialogService.open(CarritoModalComponent, {
+      header: 'Carrito',
+      width: '50%',
+      contentStyle: { overflow: 'auto' },
+      baseZIndex: 10000,
+      data: this.articulos
     });
 
     ref.onClose.subscribe((result) => {

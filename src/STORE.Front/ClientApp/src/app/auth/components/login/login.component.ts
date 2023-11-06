@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AuthService } from '../../services/auth.service';
+import { User } from '../../interface/user';
 
 @Component({
   selector: 'app-login',
@@ -9,14 +11,42 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class LoginComponent {
   loginForm: FormGroup;
 
-  constructor(private fb: FormBuilder) {
+  users: User[] =[];
+
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService
+  ) {
     this.loginForm = this.fb.group({
-      username: ['', [Validators.required]],
+      user: ['', [Validators.required]],
       password: ['', [Validators.required]],
+    });
+
+    this.listUsers();
+  }
+
+  listUsers(){
+    this.authService.listUsers().subscribe({
+      next: (resp) => {
+        this.users = resp;
+      }
     });
   }
 
   login() {
-    // Aquí puedes agregar la lógica de inicio de sesión utilizando this.loginForm.value
+
+    const loggedUser = this.users.find(u => u.user === this.userGet?.value)!;
+
+    const usuario: User = {
+      id: loggedUser.id,
+      user: this.userGet?.value,
+      password: this.passwordGet?.value,
+      admin: loggedUser.admin
+    };
+    
+    this.authService.iniciarSesion(usuario);
   }
+
+  get userGet() {return this.loginForm.get('user');}
+  get passwordGet() {return this.loginForm.get('password');}
 }

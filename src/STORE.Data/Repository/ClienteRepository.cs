@@ -22,33 +22,43 @@ namespace STORE.Data.Repository
 
             try
             {
-                var clienteDetalle = await _context.ClientesArticulos
-                 .Include(c => c.Cliente)
-                 .Include(a => a.Articulo)
-                 .GroupBy(ca => ca.Cliente)
-                 .Select(group => new ListClientesDto
-                 {
-                     cliente = new ClienteDto
-                     {
-                         ClienteID = group.Key.ClienteID,
-                         Nombre = group.Key.Nombre,
-                         Apellidos = group.Key.Apellidos,
-                         Direccion = group.Key.Direccion
-                     },
-                     ListClientesDetalle = group.Select(ca => new ListClientesDetalleDto
-                     {
-                         ClienteArticuloID = ca.ClienteArticuloID,
-                         ClienteID = ca.Cliente.ClienteID,
-                         ArticuloID = ca.Articulo.ArticuloID,
-                         Codigo = ca.Articulo.Codigo,
-                         Descripcion = ca.Articulo.Descripcion,
-                         Precio = ca.Articulo.Precio,
-                         Imagen = ca.Articulo.Imagen,
-                         Stock = ca.Articulo.Stock,
-                         Fecha = ca.Fecha
-                     }).ToList()
-                 })
-                 .ToListAsync();
+                var clienteDetalle = await _context.Clientes
+                    .GroupJoin(
+                        _context.ClientesArticulos,
+                        cliente => cliente.ClienteID,
+                        clienteArticulo => clienteArticulo.ClienteID,
+                        (cliente, clienteArticulos) => new { Cliente = cliente, ClienteArticulos = clienteArticulos }
+                    )
+                    .SelectMany(
+                        result => result.ClienteArticulos.DefaultIfEmpty(),
+                        (cliente, clienteArticulo) => new ListClientesDto
+                        {
+                            cliente = new ClienteDto
+                            {
+                                ClienteID = cliente.Cliente.ClienteID,
+                                Nombre = cliente.Cliente.Nombre,
+                                Apellidos = cliente.Cliente.Apellidos,
+                                Direccion = cliente.Cliente.Direccion
+                            },
+                            ListClientesDetalle = clienteArticulo == null ? new List<ListClientesDetalleDto>() : new List<ListClientesDetalleDto>
+                            {
+                                new ListClientesDetalleDto
+                                {
+                                    ClienteArticuloID = clienteArticulo.ClienteArticuloID,
+                                    ClienteID = clienteArticulo.Cliente.ClienteID,
+                                    ArticuloID = clienteArticulo.Articulo.ArticuloID,
+                                    Codigo = clienteArticulo.Articulo.Codigo,
+                                    Descripcion = clienteArticulo.Articulo.Descripcion,
+                                    Precio = clienteArticulo.Articulo.Precio,
+                                    Imagen = clienteArticulo.Articulo.Imagen,
+                                    Stock = clienteArticulo.Articulo.Stock,
+                                    Fecha = clienteArticulo.Fecha
+                                }
+                            }
+                        }
+                    )
+                    .ToListAsync();
+
 
                 if (clienteDetalle is not null)
                 {
@@ -262,23 +272,43 @@ namespace STORE.Data.Repository
                 try
                 {
 
-                    var articuloExist = await _context.ClientesArticulos
+                    var articulClienteExist = await _context.ClientesArticulos
                     .Include(a => a.Articulo)
                     .Include(c => c.Cliente)
                     .Where(c => c.ClienteID == ClienteID)
                     .FirstOrDefaultAsync();
 
-                    if (articuloExist is not null)
+                    if (articulClienteExist is not null)
                     {
-                        _context.ClientesArticulos.Remove(articuloExist);
-                        _context.Clientes.Remove(articuloExist.Cliente);
+                        _context.ClientesArticulos.Remove(articulClienteExist);
+                        _context.Clientes.Remove(articulClienteExist.Cliente);
                         await _context.SaveChangesAsync();
 
                         respose.IsSuccess = true;
                         respose.Data = true;
                         respose.Message = GlobalMessges.MESSAGE_DELETE;
                         await transaction.CommitAsync();
+
+                        return respose;
+
                     }
+
+                    var articuloExist = await _context.Clientes
+                        .Where(c => c.ClienteID == ClienteID)
+                        .FirstOrDefaultAsync();
+
+                    _context.Clientes.Remove(articuloExist);
+                    await _context.SaveChangesAsync();
+
+                    respose.IsSuccess = true;
+                    respose.Data = true;
+                    respose.Message = GlobalMessges.MESSAGE_DELETE;
+                    await transaction.CommitAsync();
+
+                    return respose;
+
+
+
 
                     return respose;
 

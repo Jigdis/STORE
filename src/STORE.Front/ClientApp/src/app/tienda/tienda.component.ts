@@ -4,6 +4,8 @@ import { RegistroModalComponent } from './components/registro-modal/registro-mod
 import { TiendaService } from './service/tienda.service';
 import { Tienda } from './interface/tienda';
 import { ConfirmEventType, ConfirmationService, MessageService } from 'primeng/api';
+import { Subscription } from 'rxjs';
+import { AuthService } from '../auth/services/auth.service';
 
 @Component({
   selector: 'app-tienda',
@@ -14,12 +16,23 @@ export class TiendaComponent {
 
   tiendas: Tienda[] = [];
 
+  isAdmin: boolean | undefined = false;
+
+  private userServiceSubscription: Subscription | undefined;
+
   constructor(
     private dialogService: DialogService,
     private _tiendaService: TiendaService,
     private _messageService: MessageService,
-    private confirmationService: ConfirmationService
+    private confirmationService: ConfirmationService,
+    private auth: AuthService,
   ) {
+    this.userServiceSubscription = this.auth.currentUser.subscribe(
+      currentUser => {
+        this.isAdmin = currentUser.usuario?.admin
+      }
+    )
+
     this.listTiendas();
   }
 

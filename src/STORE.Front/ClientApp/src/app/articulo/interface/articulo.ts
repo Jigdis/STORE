@@ -10,4 +10,5 @@ export interface Articulo {
     sucursal: string;
     direccion: string; 
     fecha: Date;
+    cantidadCarrito: number;
 }

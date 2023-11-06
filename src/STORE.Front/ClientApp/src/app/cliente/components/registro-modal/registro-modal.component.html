@@ -1,0 +1,47 @@
+<form [formGroup]="clienteForm">
+    <div class="p-fluid p-field">
+      <label for="nombre">Nombre</label>
+      <input id="nombre" type="text" formControlName="nombre" pInputText placeholder="Nombre" [ngClass]="{'ng-invalid ng-dirty': nombreGet?.errors && nombreGet?.touched}" />
+      <small id="nombre-error" *ngIf="nombreGet?.errors && nombreGet?.touched" class="setError">Nombre requerido</small>
+    </div>
+  
+    <div class="p-fluid p-field mt-3">
+      <label for="apellidos">Apellidos</label>
+      <input id="apellidos" type="text" formControlName="apellidos" pInputText placeholder="Apellidos" [ngClass]="{'ng-invalid ng-dirty': apellidosGet?.errors && apellidosGet?.touched}" />
+      <small id="apellidos-error" *ngIf="apellidosGet?.errors && apellidosGet?.touched" class="setError">Apellidos requeridos</small>
+    </div>
+  
+    <div class="p-fluid p-field mt-3">
+      <label for="direccion">Dirección</label>
+      <input id="direccion" type="text" formControlName="direccion" pInputText placeholder="Dirección" [ngClass]="{'ng-invalid ng-dirty': direccionGet?.errors && direccionGet?.touched}" />
+      <small id="direccion-error" *ngIf="direccionGet?.errors && direccionGet?.touched" class="setError">Dirección requerida</small>
+    </div>
+
+    <div class="p-fluid p-field mt-3">
+        <h3>Detalle de compra</h3>
+        <p-table [value]="listClientesDetalle"> 
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>Código</th>
+                    <th>Descripción</th>
+                    <th>Imagen</th>
+                    <th>Precio</th>
+                </tr>
+            </ng-template> 
+            <ng-template pTemplate="body" let-detalle>
+                <tr>
+                    <td>{{detalle.codigo}}</td>
+                    <td>{{detalle.descripcion}}</td>
+                    <td>{{detalle.imagen}}</td>
+                    <td>{{detalle.precio}}</td>
+                </tr>
+            </ng-template> 
+        </p-table>
+    </div>
+
+    <div class="flex justify-content-center mt-3">
+        <p-button label="Cerrar" styleClass="p-button-secondary p-button-text mr-2" (click)="closeDialog()"></p-button>
+        <p-button label="Guardar" (click)="guardar()" class="p-button-success" *ngIf="isEdit"></p-button>
+      </div>
+  </form>
+  

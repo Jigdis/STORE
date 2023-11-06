@@ -1,5 +1,4 @@
 <form [formGroup]="articuloForm">
-    <pre>{{articuloForm.value | json}}</pre>
     <div class="p-fluid p-field">
       <label for="codigo">Código</label>
       <input id="codigo" type="text" formControlName="codigo" pInputText placeholder="Código" [ngClass]="{'ng-invalid ng-dirty': codigoGet?.errors && codigoGet?.touched}" />

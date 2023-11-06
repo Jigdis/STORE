@@ -1,0 +1,52 @@
+<form [formGroup]="articuloForm">
+    <pre>{{articuloForm.value | json}}</pre>
+    <div class="p-fluid p-field">
+      <label for="codigo">Código</label>
+      <input id="codigo" type="text" formControlName="codigo" pInputText placeholder="Código" [ngClass]="{'ng-invalid ng-dirty': codigoGet?.errors && codigoGet?.touched}" />
+      <small id="codigo-error" *ngIf="codigoGet?.errors && codigoGet?.touched" class="setError">Código requerido</small>
+    </div>
+  
+    <div class="p-fluid p-field mt-3">
+      <label for="descripcion">Descripción</label>
+      <input id="descripcion" type="text" formControlName="descripcion" pInputText placeholder="Descripción" [ngClass]="{'ng-invalid ng-dirty': descripcionGet?.errors && descripcionGet?.touched}" />
+      <small id="descripcion-error" *ngIf="descripcionGet?.errors && descripcionGet?.touched" class="setError">Descripción requerida</small>
+    </div>
+  
+    <div class="p-fluid p-field mt-3">
+      <label for="precio">Precio</label>
+      <input id="precio" type="number" formControlName="precio" pInputText placeholder="Precio" [ngClass]="{'ng-invalid ng-dirty': precioGet?.errors && precioGet?.touched}" />
+      <small id="precio-error" *ngIf="precioGet?.errors && precioGet?.touched" class="setError">Precio requerido</small>
+    </div>
+  
+    <div class="p-fluid p-field mt-3">
+      <label for="imagen">Imagen</label>
+      <input id="imagen" type="text" formControlName="imagen" pInputText placeholder="Imagen" [ngClass]="{'ng-invalid ng-dirty': imagenGet?.errors && imagenGet?.touched}" />
+      <small id="imagen-error" *ngIf="imagenGet?.errors && imagenGet?.touched" class="setError">Imagen requerida</small>
+    </div>
+  
+    <div class="p-fluid p-field mt-3">
+      <label for="stock">Stock</label>
+      <input id="stock" type="number" formControlName="stock" pInputText placeholder="Stock" [ngClass]="{'ng-invalid ng-dirty': stockGet?.errors && stockGet?.touched}" />
+      <small id="stock-error" *ngIf="stockGet?.errors && stockGet?.touched" class="setError">Stock requerido</small>
+    </div>
+
+    <div class="p-fluid p-field mt-3">
+        <label for="tiendaID">Tienda</label>
+        <p-dropdown
+          id="tiendaID"
+          formControlName="tiendaID"
+          [options]="tiendas"
+          optionLabel="sucursal"
+          optionValue="tiendaID"
+          [showClear]="true"
+          placeholder="Selecciona una tienda"
+        ></p-dropdown>
+        <small id="tiendaID-error" *ngIf="tiendaIDGet?.errors && tiendaIDGet?.touched" class="setError">Tienda requerida</small>
+      </div>
+  
+    <div class="flex justify-content-center mt-3">
+      <p-button label="Cerrar" styleClass="p-button-secondary p-button-text mr-2" (click)="closeDialog()"></p-button>
+      <p-button label="Guardar" (click)="guardar()" class="p-button-success"></p-button>
+    </div>
+  </form>
+  

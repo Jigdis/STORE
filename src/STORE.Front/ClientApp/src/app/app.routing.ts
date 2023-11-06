@@ -29,6 +29,11 @@ const routes: Routes = [
         loadChildren: () =>
           import('./tienda/tienda.module').then((m) => m.TiendaModule),
       },
+      {
+        path: 'articulos',
+        loadChildren: () =>
+          import('./articulo/articulo.module').then((m) => m.ArticuloModule),
+      },
     ],
   },
   {

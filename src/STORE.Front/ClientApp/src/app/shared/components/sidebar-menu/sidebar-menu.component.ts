@@ -16,12 +16,12 @@ export class SidebarMenuComponent {
             {
                 label: 'Tiendas',
                 icon: 'pi pi-shopping-bag',
-                routerLink: ['/menu']
+                routerLink: ['/cliente/tienda']
             },
             {
                 label: 'Artículos',
                 icon: 'pi pi-box',
-                routerLink: ['/menu2']
+                routerLink: ['/cliente/articulos']
             },
             {
                 label: 'Clientes',

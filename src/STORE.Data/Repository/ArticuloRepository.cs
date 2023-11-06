@@ -178,18 +178,6 @@ namespace STORE.Data.Repository
                     if (articuloExist is not null)
                     {
 
-                        var codeExist = await _context.Articulos
-                        .Where(a => a.Codigo == articuloCreateDto.Codigo)
-                        .FirstOrDefaultAsync();
-
-                        if (codeExist is not null)
-                        {
-                            respose.IsSuccess = false;
-                            respose.Data = false;
-                            respose.Message = GlobalMessges.MESSAGE_EXIST;
-                            return respose;
-                        }
-
                         articuloExist.Articulo.Codigo = articuloCreateDto.Codigo;
                         articuloExist.Articulo.Descripcion = articuloCreateDto.Descripcion;
                         articuloExist.Articulo.Imagen = articuloCreateDto.Imagen;
@@ -202,7 +190,7 @@ namespace STORE.Data.Repository
 
                         respose.IsSuccess = true;
                         respose.Data = true;
-                        respose.Message = GlobalMessges.MESSAGE_SAVE;
+                        respose.Message = GlobalMessges.MESSAGE_UPDATE;
                         await transaction.CommitAsync();
 
                     }

@@ -1,7 +1,8 @@
 <h3>Artículos</h3>
 <p-toast></p-toast>
 <p-confirmDialog [style]="{width: '50vw'}"></p-confirmDialog>
-<button pButton label="Nuevo" icon="pi pi-plus" (click)="showAddDialog()" styleClass="p-button-sm" class="mb-3"></button>
+<button pButton label="Nuevo" icon="pi pi-plus" (click)="showAddDialog()" styleClass="p-button-sm" class="mb-3" *ngIf="isAdmin"></button>
+<button pButton label="Carrito" icon="pi pi-eye" (click)="showAddDialog()" styleClass="p-button-sm" class="mb-3" *ngIf="!isAdmin"></button>
 <p-table [value]="articulos"> 
     <ng-template pTemplate="header">
         <tr>
@@ -22,9 +23,11 @@
             <td>$ {{articulo.precio}}</td>
             <td>{{articulo.imagen}}</td>
             <td>{{articulo.stock}}</td>
-            <td>
-                <p-button icon="pi pi-pencil" styleClass="p-button-outlined p-button-sm mr-2" (onClick)="edit(articulo)"></p-button>
-                <p-button icon="pi pi-trash" styleClass="p-button-outlined p-button-sm p-button-danger" (onClick)="delete(articulo)"></p-button>
+            <td >
+                <p-button icon="pi pi-plus" styleClass="p-button-outlined p-button-sm mr-2" (onClick)="agregarCarrito(articulo)" *ngIf="!isAdmin"></p-button>
+                <p-button icon="pi pi-minus" styleClass="p-button-outlined p-button-sm p-button-danger mr-2" (onClick)="eliminarCarrito(articulo)" *ngIf="!isAdmin"></p-button>
+                <p-button icon="pi pi-pencil" styleClass="p-button-outlined p-button-sm mr-2" (onClick)="edit(articulo)" *ngIf="isAdmin"></p-button>
+                <p-button icon="pi pi-trash" styleClass="p-button-outlined p-button-sm p-button-danger" (onClick)="delete(articulo)" *ngIf="isAdmin"></p-button>
             </td>
         </tr>
     </ng-template> 

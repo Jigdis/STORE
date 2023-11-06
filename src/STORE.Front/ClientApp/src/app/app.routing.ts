@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { LayoutComponent } from './shared/components/layout/layout.component';
+import { AuthGuard } from './auth/guards/auth.guard';
 
 
 const routes: Routes = [
@@ -21,8 +22,9 @@ const routes: Routes = [
     ],
   },
   {
-    path: 'cliente',
+    path: '',
     component: LayoutComponent,
+    canActivate: [AuthGuard],
     children: [
       {
         path: 'tienda',
@@ -39,13 +41,6 @@ const routes: Routes = [
         loadChildren: () =>
           import('./cliente/cliente.module').then((m) => m.ClienteModule),
       },
-    ],
-  },
-  {
-    path: 'admin',
-    component: LayoutComponent,
-    children: [
-      
     ],
   },
   {

@@ -5,6 +5,8 @@ import { Articulo } from './interface/articulo';
 import { ArticuloService } from './service/articulo.service';
 import { ArticuloCreate } from './interface/articulo-create';
 import { RegistroModalComponent } from './components/registro-modal/registro-modal.component';
+import { AuthService } from '../auth/services/auth.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-articulo',
@@ -13,15 +15,24 @@ import { RegistroModalComponent } from './components/registro-modal/registro-mod
 })
 export class ArticuloComponent {
   articulos: Articulo[] = [];
+  isAdmin: boolean | undefined = false;
+  private userServiceSubscription: Subscription | undefined;
 
   constructor(
     private dialogService: DialogService,
     private _articuloService: ArticuloService,
     private _messageService: MessageService,
-    private confirmationService: ConfirmationService
+    private confirmationService: ConfirmationService,
+    private auth: AuthService,
   ) {
+    this.userServiceSubscription = this.auth.currentUser.subscribe(
+      currentUser => {
+        this.isAdmin = currentUser.usuario?.admin
+      }
+    );
     this.listTiendas();
   }
+
 
   listTiendas() {
     this._articuloService.listArticulos().subscribe({
@@ -85,5 +96,13 @@ export class ArticuloComponent {
     ref.onClose.subscribe((result) => {
       this.listTiendas()
     });
+  }
+
+  agregarCarrito(articulo: Articulo){
+
+  }
+
+  eliminarCarrito(articulo: Articulo){
+
   }
 }

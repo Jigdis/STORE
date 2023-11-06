@@ -5,6 +5,7 @@ import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ClienteService } from '../../service/cliente.service';
 import { ClienteCreate } from '../../interface/cliente-create';
 import { Cliente } from '../../interface/cliente';
+import { ClienteDetalle } from '../../interface/cliente-detalle';
 
 @Component({
   selector: 'app-registro-modal',
@@ -13,8 +14,10 @@ import { Cliente } from '../../interface/cliente';
 })
 export class RegistroModalComponent {
   clienteForm: FormGroup;
-  cliente: Cliente | null = null;;
+  cliente: Cliente | null = null;
+  listClientesDetalle: ClienteDetalle[] = [];
   isEdit: boolean = false;
+  isVer: boolean = false;
 
   constructor(
     public dialogRef: DynamicDialogRef,
@@ -32,13 +35,23 @@ export class RegistroModalComponent {
   }
 
   ngOnInit() {
-    this.cliente = this.dialogConfig.data;
+    this.cliente = this.dialogConfig.data.cliente;
+    this.listClientesDetalle = this.dialogConfig.data.listClienteDetalle;
+    this.isVer = this.dialogConfig.data.isVer;
+    this.isEdit = this.dialogConfig.data.isEdit;
+
     if(this.cliente != null){
-      this.isEdit = true;
       this.clienteIDGet?.setValue(this.cliente.clienteID);
       this.nombreGet?.setValue(this.cliente.nombre);
       this.apellidosGet?.setValue(this.cliente.apellidos);
       this.direccionGet?.setValue(this.cliente.direccion);
+
+      if(this.isVer){
+        this.nombreGet?.disable();
+        this.apellidosGet?.disable();
+        this.direccionGet?.disable();
+        
+      }
     }
   }
 

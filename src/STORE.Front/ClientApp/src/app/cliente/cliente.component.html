@@ -19,6 +19,7 @@
             <td>{{cliente.cliente.apellidos}}</td>
             <td>{{cliente.cliente.direccion}}</td>
             <td>
+                <p-button icon="pi pi-eye" styleClass="p-button-outlined p-button-sm mr-2" (onClick)="ver(cliente.cliente, cliente.listClientesDetalle)"></p-button>
                 <p-button icon="pi pi-pencil" styleClass="p-button-outlined p-button-sm mr-2" (onClick)="edit(cliente.cliente)"></p-button>
                 <p-button icon="pi pi-trash" styleClass="p-button-outlined p-button-sm p-button-danger" (onClick)="delete(cliente.cliente)"></p-button>
             </td>

@@ -6,6 +6,7 @@ import { ClienteService } from './service/cliente.service';
 import { Cliente } from './interface/cliente';
 import { RegistroModalComponent } from './components/registro-modal/registro-modal.component';
 import { ClienteCreate } from './interface/cliente-create';
+import { ClienteDetalle } from './interface/cliente-detalle';
 
 @Component({
   selector: 'app-cliente',
@@ -43,7 +44,7 @@ export class ClienteComponent {
       width: '50%',
       contentStyle: { overflow: 'auto' },
       baseZIndex: 10000,
-      data: cliente
+      data: {cliente, isEdit:true}
     });
 
     ref.onClose.subscribe((result) => {
@@ -72,6 +73,20 @@ export class ClienteComponent {
       reject: (type: ConfirmEventType) => {
         this.listTiendas();
       }
+    });
+  }
+
+  ver(cliente: Cliente, listClienteDetalle: ClienteDetalle){
+    const ref: DynamicDialogRef = this.dialogService.open(RegistroModalComponent, {
+      header: 'Ver Cliente',
+      width: '50%',
+      contentStyle: { overflow: 'auto' },
+      baseZIndex: 10000,
+      data: {cliente, listClienteDetalle ,isVer:true},
+    });
+
+    ref.onClose.subscribe((result) => {
+      this.listTiendas()
     });
   }
 

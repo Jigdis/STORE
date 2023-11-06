@@ -16,10 +16,32 @@
       <input id="direccion" type="text" formControlName="direccion" pInputText placeholder="Dirección" [ngClass]="{'ng-invalid ng-dirty': direccionGet?.errors && direccionGet?.touched}" />
       <small id="direccion-error" *ngIf="direccionGet?.errors && direccionGet?.touched" class="setError">Dirección requerida</small>
     </div>
-  
+
+    <div class="p-fluid p-field mt-3">
+        <h3>Detalle de compra</h3>
+        <p-table [value]="listClientesDetalle"> 
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>Código</th>
+                    <th>Descripción</th>
+                    <th>Imagen</th>
+                    <th>Precio</th>
+                </tr>
+            </ng-template> 
+            <ng-template pTemplate="body" let-detalle>
+                <tr>
+                    <td>{{detalle.codigo}}</td>
+                    <td>{{detalle.descripcion}}</td>
+                    <td>{{detalle.imagen}}</td>
+                    <td>{{detalle.precio}}</td>
+                </tr>
+            </ng-template> 
+        </p-table>
+    </div>
+
     <div class="flex justify-content-center mt-3">
         <p-button label="Cerrar" styleClass="p-button-secondary p-button-text mr-2" (click)="closeDialog()"></p-button>
-        <p-button label="Guardar" (click)="guardar()" class="p-button-success"></p-button>
+        <p-button label="Guardar" (click)="guardar()" class="p-button-success" *ngIf="isEdit"></p-button>
       </div>
   </form>
   

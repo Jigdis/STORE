@@ -1,0 +1,24 @@
+<form [formGroup]="tiendaForm">
+    <pre>{{tiendaForm.value | json}}</pre>
+    <div class="p-fluid p-field">
+        <label for="sucursal">Sucursal</label>
+        <input id="sucursal" type="text" formControlName="sucursal" pInputText placeholder="Sucursal"
+            [ngClass]="{'ng-invalid ng-dirty': sucursalGet?.errors && sucursalGet?.touched}" />
+        <small id="sucursal-error" *ngIf="sucursalGet?.errors && sucursalGet?.touched" class="setError">
+            Sucursal requerido
+        </small>
+    </div>
+    <div class="p-fluid p-field mt-3">
+        <label for="direccion">Dirección</label>
+        <input id="direccion" type="text" formControlName="direccion" pInputText placeholder="Dirección" />
+        <small id="sucursal-error" *ngIf="direccionGet?.errors && direccionGet?.touched" class="setError">
+            Dirección requerido
+        </small>
+        
+    </div>
+
+    <div class="flex justify-content-center mt-3">
+        <p-button label="Cerrar" styleClass="p-button-secondary p-button-text mr-2" (click)="closeDialog()"></p-button>
+        <p-button label="Guardar" (click)="guardar()" class="p-button-success"></p-button>
+    </div>
+</form>

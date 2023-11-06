@@ -1,0 +1,20 @@
+<div class="flex justify-content-center flex-wrap align-items-center h-screen">
+    <form [formGroup]="loginForm" class="login-form" (ngSubmit)="login()">
+        <h1>Inicio de sesión</h1>
+        <div class="flex flex-column gap-2">
+            <label for="username">Usuario</label>
+            <input pInputText id="username" aria-describedby="username-help" />
+            <small id="username-help">Usuario requerido</small>
+        </div>
+
+        <div class="flex flex-column gap-2 pt-2">
+            <label for="username">Contraseña</label>
+            <input pInputText id="username" aria-describedby="username-help" />
+            <small id="username-help">Contraseña requerido</small>
+        </div>
+
+        <div class="flex flex-column">
+            <p-button icon="pi pi-sign-in" label="Iniciar sesión" class="pt-5"></p-button>
+        </div>
+    </form>
+</div>

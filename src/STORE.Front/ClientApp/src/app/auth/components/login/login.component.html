@@ -1,6 +1,5 @@
 <div class="flex justify-content-center flex-wrap align-items-center h-screen">
     <form [formGroup]="loginForm" class="login-form" (ngSubmit)="login()">
-        <pre>{{loginForm.value | json}}</pre>
         <h1>Inicio de sesión</h1>
         <div class="flex flex-column gap-2">
             <label for="user">Usuario</label>

@@ -5,6 +5,7 @@ import { BaseResponse } from 'src/app/shared/interface/base-response';
 import { environment } from 'src/environments/environment';
 import { ClienteCreate } from '../interface/cliente-create';
 import { ListCliente } from '../interface/list-cliente';
+import { ClienteCompraArticulo } from '../interface/cliente-compra-articulo';
 
 const apiURL = environment.apiURL;
 @Injectable({
@@ -71,4 +72,20 @@ export class ClienteService {
       }
     }));
   }
+
+  clienteCompraArticulo(clienteCompraArticulo: ClienteCompraArticulo){
+    return this._http
+    .post<BaseResponse<boolean>>(`${apiURL}/api/Clientes/ClienteCompraArticulo`, clienteCompraArticulo)
+    .pipe(map((response) => {
+      if (response.isSuccess) {
+        return response;
+      }
+      else{
+        throwError(() => new Error(response.message));
+        return response;
+      }
+
+    }));
+  }
+  
 }

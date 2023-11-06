@@ -7,6 +7,7 @@ import { ArticuloCreate } from './interface/articulo-create';
 import { RegistroModalComponent } from './components/registro-modal/registro-modal.component';
 import { AuthService } from '../auth/services/auth.service';
 import { Subscription } from 'rxjs';
+import { CarritoModalComponent } from './components/carrito-modal/carrito-modal.component';
 
 @Component({
   selector: 'app-articulo',
@@ -38,6 +39,10 @@ export class ArticuloComponent {
     this._articuloService.listArticulos().subscribe({
       next: (resp) => {
         this.articulos = resp;
+
+        this.articulos.forEach(articulo => {
+          articulo.cantidadCarrito = 0;
+        });
         console.log('articulos',this.articulos)
       },
       error: (error) => {
@@ -99,10 +104,26 @@ export class ArticuloComponent {
   }
 
   agregarCarrito(articulo: Articulo){
-
+    articulo.cantidadCarrito += 1;
   }
 
   eliminarCarrito(articulo: Articulo){
+  if(articulo.cantidadCarrito > 0)
+    articulo.cantidadCarrito -= 1;
 
+  }
+
+  verCarrito(){
+    const ref: DynamicDialogRef = this.dialogService.open(CarritoModalComponent, {
+      header: 'Carrito',
+      width: '50%',
+      contentStyle: { overflow: 'auto' },
+      baseZIndex: 10000,
+      data: this.articulos
+    });
+
+    ref.onClose.subscribe((result) => {
+      this.listTiendas()
+    });
   }
 }

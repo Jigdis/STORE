@@ -1,0 +1,27 @@
+<h3>Clientes</h3>
+<p-toast></p-toast>
+<p-confirmDialog [style]="{width: '50vw'}"></p-confirmDialog>
+<button pButton label="Nuevo" icon="pi pi-plus" (click)="showAddDialog()" styleClass="p-button-sm" class="mb-3"></button>
+<p-table [value]="clientes"> 
+    <ng-template pTemplate="header">
+        <tr>
+            <th>Id</th>
+            <th>Nombre</th>
+            <th>Apellidos</th>
+            <th>Dirección</th>
+            <th>Acciones</th>
+        </tr>
+    </ng-template> 
+    <ng-template pTemplate="body" let-cliente>
+        <tr>
+            <td>{{cliente.cliente.clienteID}}</td>
+            <td>{{cliente.cliente.nombre}}</td>
+            <td>{{cliente.cliente.apellidos}}</td>
+            <td>{{cliente.cliente.direccion}}</td>
+            <td>
+                <p-button icon="pi pi-pencil" styleClass="p-button-outlined p-button-sm mr-2" (onClick)="edit(cliente.cliente)"></p-button>
+                <p-button icon="pi pi-trash" styleClass="p-button-outlined p-button-sm p-button-danger" (onClick)="delete(cliente.cliente)"></p-button>
+            </td>
+        </tr>
+    </ng-template> 
+</p-table>
